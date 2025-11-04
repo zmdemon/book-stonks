@@ -4,6 +4,7 @@ import {
   createRouter,
 } from '@tanstack/react-router';
 import MainPage from './pages/MainPage.tsx';
+import HomePage from '@/pages/HomePage/HomePage.tsx';
 
 export const rootRoute = createRootRoute({
   component: MainPage,
@@ -14,9 +15,7 @@ export const indexRoute = createRoute({
   path: '/',
   component: function Index() {
     return (
-      <div className="p-2">
-        <h3>Welcome Home!</h3>
-      </div>
+      <HomePage />
     );
   },
 });

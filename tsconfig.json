@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["DOM", "ES2020"],
+    "lib": ["DOM", "ES2020", "ESNext"],
     "jsx": "react-jsx",
     "target": "ES2020",
     "noEmit": true,
@@ -15,7 +15,9 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "noUncheckedSideEffectImports": true,
-
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     /* type checking */
     "strict": true,
     "noUnusedLocals": true,
