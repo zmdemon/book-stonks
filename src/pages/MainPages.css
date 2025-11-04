@@ -1,0 +1,17 @@
+body {
+  color: black;
+  background-image: linear-gradient(to bottom, white, whitesmoke);
+}
+
+.MainPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 8px;
+  font-size: 24px;
+}
+
+
