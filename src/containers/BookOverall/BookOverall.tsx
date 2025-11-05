@@ -1,12 +1,13 @@
 import { Box, Card, Text } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
-
-const mockBalance = 325;
-const mockIncome = 48;
-const mockIncomePercent = ((mockIncome / mockBalance) * 100).toFixed(2);
+import { useMemo } from 'react';
+import {
+  setPeriod,
+  useBalanceHook,
+} from '@/containers/BookOverall/store-book-overall.ts';
 
 export const BookOverall = () => {
-  const [period, setPeriod] = useState<'today' | 'allTime'>('today');
+  const { balance, income, percent, period } = useBalanceHook();
+
   const periodText = useMemo(() => {
     let text = 'за всё время';
     if (period === 'today') {
@@ -15,22 +16,23 @@ export const BookOverall = () => {
     return text;
   }, [period]);
 
-  const income = useMemo(() => {
-    let incomeValue: string = mockIncome.toString();
-    let incomePercentValue = mockIncomePercent.toString();
+  const incomeData = useMemo(() => {
+    let incomeValue: string = income.toString();
+    let incomePercentValue = percent.toFixed(2).toString();
     if (period === 'today') {
-      incomeValue = (mockIncome / 30).toFixed(2);
-      incomePercentValue = (Number(mockIncomePercent) / 30).toFixed(2);
+      incomeValue = (income / 30).toFixed(2);
+      incomePercentValue = (Number(percent) / 30).toFixed(2);
     }
     return { incomeValue, incomePercentValue };
   }, [period]);
-  const incomeText = `${income.incomeValue.replace('.', ',')} стр. (${income.incomePercentValue.replace('.', ',')}) %`;
+
+  const incomeText = `${incomeData.incomeValue.replace('.', ',')} стр. (${incomeData.incomePercentValue.replace('.', ',')}) %`;
 
   return (
     <Card.Root width="370px" mt={'8'}>
       <Card.Body>
         <Text textStyle="2xl" fontWeight="medium" letterSpacing="wide">
-          {mockBalance} стр.
+          {balance} стр.
         </Text>
         <Box flexDirection="row" display="flex" gap="1" cursor="pointer">
           <Text
@@ -39,7 +41,6 @@ export const BookOverall = () => {
             fontWeight="medium"
             letterSpacing="wide"
             mt="2"
-            onClick={() => {}}
           >
             {incomeText}
           </Text>
@@ -49,9 +50,7 @@ export const BookOverall = () => {
             fontWeight="medium"
             letterSpacing="wide"
             mt="2"
-            onClick={() => {
-              setPeriod(period === 'allTime' ? 'today' : 'allTime');
-            }}
+            onClick={setPeriod}
           >
             {periodText}
           </Text>
