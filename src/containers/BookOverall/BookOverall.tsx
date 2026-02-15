@@ -1,38 +1,26 @@
 import { Box, Card, Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
-import {
-  setPeriod,
-  useBalanceHook,
-} from '@/containers/BookOverall/store-book-overall.ts';
+import { useOverallStats, togglePeriod } from '@/store/store-books';
 
 export const BookOverall = () => {
-  const { balance, income, percent, period } = useBalanceHook();
+  const { totalRead, todayRead, totalPages, period } = useOverallStats();
 
   const periodText = useMemo(() => {
-    let text = 'за всё время';
-    if (period === 'today') {
-      text = 'за сегодня';
-    }
-    return text;
+    return period === 'today' ? 'за сегодня' : 'за всё время';
   }, [period]);
 
-  const incomeData = useMemo(() => {
-    let incomeValue: string = income.toString();
-    let incomePercentValue = percent.toFixed(2).toString();
-    if (period === 'today') {
-      incomeValue = (income / 30).toFixed(2);
-      incomePercentValue = (Number(percent) / 30).toFixed(2);
-    }
-    return { incomeValue, incomePercentValue };
-  }, [period]);
-
-  const incomeText = `${incomeData.incomeValue.replace('.', ',')} стр. (${incomeData.incomePercentValue.replace('.', ',')}) %`;
+  const incomeText = useMemo(() => {
+    const pagesRead = period === 'today' ? todayRead : totalRead;
+    const percent =
+      totalPages > 0 ? ((pagesRead / totalPages) * 100).toFixed(2) : '0';
+    return `${pagesRead} стр. (${percent.replace('.', ',')}%)`;
+  }, [period, todayRead, totalRead, totalPages]);
 
   return (
     <Card.Root width="370px" mt={'8'}>
       <Card.Body>
         <Text textStyle="2xl" fontWeight="medium" letterSpacing="wide">
-          {balance} стр.
+          {totalRead} стр.
         </Text>
         <Box flexDirection="row" display="flex" gap="1" cursor="pointer">
           <Text
@@ -50,7 +38,7 @@ export const BookOverall = () => {
             fontWeight="medium"
             letterSpacing="wide"
             mt="2"
-            onClick={setPeriod}
+            onClick={togglePeriod}
           >
             {periodText}
           </Text>
