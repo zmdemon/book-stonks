@@ -13,6 +13,7 @@ import { useBooks } from '@/store/store-books';
 import { AddBookDialog } from '@/containers/AddBookDialog/AddBookDialog';
 import { EditBookDialog } from '@/containers/EditBookDialog/EditBookDialog';
 import { DeleteBookDialog } from '@/containers/DeleteBookDialog/DeleteBookDialog';
+import { LogReadingDialog } from '@/containers/LogReadingDialog/LogReadingDialog';
 import type { Book } from '@/types/book';
 
 const HomePage = () => {
@@ -20,6 +21,7 @@ const HomePage = () => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [deletingBook, setDeletingBook] = useState<Book | null>(null);
+  const [loggingBook, setLoggingBook] = useState<Book | null>(null);
 
   return (
     <>
@@ -48,6 +50,7 @@ const HomePage = () => {
                     book={book}
                     onEdit={setEditingBook}
                     onDelete={setDeletingBook}
+                    onLogReading={setLoggingBook}
                   />
                 ))}
               </Accordion.ItemBody>
@@ -67,6 +70,10 @@ const HomePage = () => {
       <DeleteBookDialog
         book={deletingBook}
         onClose={() => setDeletingBook(null)}
+      />
+      <LogReadingDialog
+        book={loggingBook}
+        onClose={() => setLoggingBook(null)}
       />
     </>
   );

@@ -1,9 +1,10 @@
-import { Box, Card, Text } from '@chakra-ui/react';
+import { Box, Card, Progress, Text } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useOverallStats, togglePeriod } from '@/store/store-books';
 
 export const BookOverall = () => {
-  const { totalRead, todayRead, totalPages, period } = useOverallStats();
+  const { totalRead, todayRead, totalPages, totalBooks, period } =
+    useOverallStats();
 
   const periodText = useMemo(() => {
     return period === 'today' ? 'за сегодня' : 'за всё время';
@@ -22,13 +23,37 @@ export const BookOverall = () => {
         <Text textStyle="2xl" fontWeight="medium" letterSpacing="wide">
           {totalRead} стр.
         </Text>
-        <Box flexDirection="row" display="flex" gap="1" cursor="pointer">
+        <Text
+          textStyle="sm"
+          color="gray.600"
+          fontWeight="medium"
+          letterSpacing="wide"
+        >
+          Книг: {totalBooks}
+        </Text>
+        <Progress.Root
+          value={totalRead}
+          max={totalPages > 0 ? totalPages : 1}
+          mt="3"
+          size="sm"
+          colorPalette="blue"
+        >
+          <Progress.Track>
+            <Progress.Range />
+          </Progress.Track>
+        </Progress.Root>
+        <Box
+          flexDirection="row"
+          display="flex"
+          gap="1"
+          cursor="pointer"
+          mt="2"
+        >
           <Text
             textStyle="sm"
             color={'green.700'}
             fontWeight="medium"
             letterSpacing="wide"
-            mt="2"
           >
             {incomeText}
           </Text>
@@ -37,7 +62,6 @@ export const BookOverall = () => {
             color={'blue.700'}
             fontWeight="medium"
             letterSpacing="wide"
-            mt="2"
             onClick={togglePeriod}
           >
             {periodText}
