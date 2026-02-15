@@ -1,17 +1,15 @@
-import { Box, Card, Container, Text } from '@chakra-ui/react';
+import { Box, Button, Card, Container, Text } from '@chakra-ui/react';
+import type { Book } from '@/types/book';
 
 type Props = {
-  book: {
-    name: string;
-    totalPages: number;
-    currentPage: number;
-    todayCount: number;
-    date?: string;
-  };
+  book: Book;
+  onEdit: (book: Book) => void;
+  onDelete: (book: Book) => void;
 };
-export const BookCard = (props: Props) => {
-  const { name, totalPages, currentPage, todayCount } = props.book;
-  const percent = ((todayCount / totalPages) * 100)
+
+export const BookCard = ({ book, onEdit, onDelete }: Props) => {
+  const { name, totalPages, currentPage, todayCount } = book;
+  const percent = ((currentPage / totalPages) * 100)
     .toFixed(2)
     .replace('.', ',');
   return (
@@ -72,6 +70,19 @@ export const BookCard = (props: Props) => {
           </Box>
         </Container>
       </Card.Body>
+      <Card.Footer justifyContent="flex-end" gap="2">
+        <Button size="sm" variant="outline" onClick={() => onEdit(book)}>
+          Редактировать
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          colorPalette="red"
+          onClick={() => onDelete(book)}
+        >
+          Удалить
+        </Button>
+      </Card.Footer>
     </Card.Root>
   );
 };
