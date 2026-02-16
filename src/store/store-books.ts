@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { useShallow } from 'zustand/react/shallow';
 import type { Book } from '@/types/book';
 
@@ -15,33 +16,41 @@ const getTodayCount = (book: Book): number =>
     .filter((entry) => entry.date === getTodayDateString())
     .reduce((sum, entry) => sum + entry.pagesRead, 0);
 
-export const useBooksStore = create<BooksState>(() => ({
-  books: [
-    {
-      id: crypto.randomUUID(),
-      name: 'Ulysses',
-      totalPages: 3500,
-      currentPage: 32,
-      readingLog: [
-        { date: '2021-06-01', pagesRead: 29 },
-        { date: '2021-06-02', pagesRead: 3 },
+export const useBooksStore = create<BooksState>()(
+  persist(
+    () => ({
+      books: [
+        {
+          id: '550e8400-e29b-41d4-a716-446655440001',
+          name: 'Ulysses',
+          totalPages: 3500,
+          currentPage: 32,
+          readingLog: [
+            { date: '2021-06-01', pagesRead: 29 },
+            { date: '2021-06-02', pagesRead: 3 },
+          ],
+          date: '2021-06-01',
+        },
+        {
+          id: '550e8400-e29b-41d4-a716-446655440002',
+          name: 'Братья Карамазовы',
+          totalPages: 2500,
+          currentPage: 122,
+          readingLog: [
+            { date: '2021-06-01', pagesRead: 117 },
+            { date: '2021-06-02', pagesRead: 5 },
+          ],
+          date: '2021-06-01',
+        },
       ],
-      date: '2021-06-01',
-    },
+      period: 'today',
+    }),
     {
-      id: crypto.randomUUID(),
-      name: 'Братья Карамазовы',
-      totalPages: 2500,
-      currentPage: 122,
-      readingLog: [
-        { date: '2021-06-01', pagesRead: 117 },
-        { date: '2021-06-02', pagesRead: 5 },
-      ],
-      date: '2021-06-01',
-    },
-  ],
-  period: 'today',
-}));
+      name: 'book-stonks-storage',
+      version: 1,
+    }
+  )
+);
 
 export const useBooks = () =>
   useBooksStore(useShallow((state) => state.books));
