@@ -43,11 +43,21 @@ export const EditBookDialog = ({ book, onClose }: Props) => {
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content>
+        <Dialog.Content
+          maxWidth={{ base: 'calc(100vw - 32px)', sm: 'md' }}
+          margin={{ base: 4, sm: 'auto' }}
+        >
           <Dialog.Header>
-            <Dialog.Title>Редактировать книгу</Dialog.Title>
+            <Dialog.Title fontSize={{ base: 'lg', md: 'xl' }}>
+              Редактировать книгу
+            </Dialog.Title>
           </Dialog.Header>
-          <Dialog.Body display="flex" flexDirection="column" gap="4">
+          <Dialog.Body
+            display="flex"
+            flexDirection="column"
+            gap={{ base: 3, md: 4 }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          >
             <Field.Root required>
               <Field.Label>Название</Field.Label>
               <Input
@@ -72,11 +82,20 @@ export const EditBookDialog = ({ book, onClose }: Props) => {
               />
             </Field.Root>
           </Dialog.Body>
-          <Dialog.Footer>
-            <Button variant="outline" onClick={onClose}>
+          <Dialog.Footer
+            flexDirection={{ base: 'column', sm: 'row' }}
+            gap="2"
+          >
+            <Button
+              variant="outline"
+              onClick={onClose}
+              width={{ base: '100%', sm: 'auto' }}
+            >
               Отмена
             </Button>
-            <Button onClick={handleSubmit}>Сохранить</Button>
+            <Button onClick={handleSubmit} width={{ base: '100%', sm: 'auto' }}>
+              Сохранить
+            </Button>
           </Dialog.Footer>
           <Dialog.CloseTrigger />
         </Dialog.Content>

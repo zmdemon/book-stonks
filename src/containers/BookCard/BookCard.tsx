@@ -23,9 +23,17 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
   const percent = stats?.percentComplete.toFixed(2).replace('.', ',') ?? '0';
 
   return (
-    <Card.Root width="370px" mt={'8'}>
+    <Card.Root
+      width={{ base: '100%', md: '370px' }}
+      maxWidth={{ base: 'calc(100vw - 32px)', md: '370px' }}
+      mt={{ base: 4, md: 8 }}
+    >
       <Card.Body>
-        <Text textStyle="2xl" fontWeight="medium" letterSpacing="wide">
+        <Text
+          textStyle={{ base: 'xl', md: '2xl' }}
+          fontWeight="medium"
+          letterSpacing="wide"
+        >
           {name}
         </Text>
         <Progress.Root
@@ -44,13 +52,15 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
           justifyContent={'space-between'}
           padding={'0'}
           mt="2"
+          gap={{ base: 2, md: 0 }}
         >
-          <Box flexDirection="column" display="flex" gap="1">
+          <Box flexDirection="column" display="flex" gap="1" flex="1">
             <Text
               textStyle="sm"
               color={'gray.600'}
               fontWeight="medium"
               letterSpacing="wide"
+              fontSize={{ base: 'xs', md: 'sm' }}
             >
               {totalPages} стр.
             </Text>
@@ -59,6 +69,7 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
               color={'gray.600'}
               fontWeight="medium"
               letterSpacing="wide"
+              fontSize={{ base: 'xs', md: 'sm' }}
             >
               {currentPage - todayCount} стр. → {currentPage} стр.
             </Text>
@@ -68,12 +79,14 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
             alignItems={'flex-end'}
             display="flex"
             gap="1"
+            flex="1"
           >
             <Text
               textStyle="sm"
               color={'gray.600'}
               fontWeight="medium"
               letterSpacing="wide"
+              fontSize={{ base: 'xs', md: 'sm' }}
             >
               {currentPage} стр.
             </Text>
@@ -82,6 +95,7 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
               color={'green.700'}
               fontWeight="medium"
               letterSpacing="wide"
+              fontSize={{ base: 'xs', md: 'sm' }}
             >
               + {percent}%
             </Text>
@@ -98,16 +112,26 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
           )}
         </Box>
       </Card.Body>
-      <Card.Footer justifyContent="flex-end" gap="2">
+      <Card.Footer
+        justifyContent={{ base: 'stretch', md: 'flex-end' }}
+        gap="2"
+        flexDirection={{ base: 'column', sm: 'row' }}
+      >
         <Button
           size="sm"
           variant="solid"
           colorPalette="green"
           onClick={() => onLogReading(book)}
+          width={{ base: '100%', sm: 'auto' }}
         >
           Записать
         </Button>
-        <Button size="sm" variant="outline" onClick={() => onEdit(book)}>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => onEdit(book)}
+          width={{ base: '100%', sm: 'auto' }}
+        >
           Редактировать
         </Button>
         <Button
@@ -115,6 +139,7 @@ export const BookCard = ({ book, onEdit, onDelete, onLogReading }: Props) => {
           variant="outline"
           colorPalette="red"
           onClick={() => onDelete(book)}
+          width={{ base: '100%', sm: 'auto' }}
         >
           Удалить
         </Button>
