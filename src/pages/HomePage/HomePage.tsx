@@ -45,7 +45,7 @@ const HomePage = () => {
         <Box
           width={{ base: '100%', md: 'm' }}
           maxWidth={{ base: '100%', md: '370px' }}
-          bg={'whitesmoke'}
+          bg="gray.50"
           margin={{ base: 4, md: 8 }}
           padding={{ base: 4, md: 8 }}
           borderRadius="md"

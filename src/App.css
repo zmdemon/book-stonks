@@ -1,8 +1,20 @@
+:root {
+  --text-color: black;
+  --bg-gradient-start: white;
+  --bg-gradient-end: whitesmoke;
+}
+
+.dark {
+  --text-color: white;
+  --bg-gradient-start: #1a202c;
+  --bg-gradient-end: #2d3748;
+}
+
 body {
   margin: 0;
-  color: black;
+  color: var(--text-color);
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  background-image: linear-gradient(to bottom, white, whitesmoke);
+  background-image: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
 }
 
 .content {

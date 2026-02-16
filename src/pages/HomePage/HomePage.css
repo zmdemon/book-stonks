@@ -1,6 +1,18 @@
+:root {
+  --text-color: black;
+  --bg-gradient-start: white;
+  --bg-gradient-end: whitesmoke;
+}
+
+.dark {
+  --text-color: white;
+  --bg-gradient-start: #1a202c;
+  --bg-gradient-end: #2d3748;
+}
+
 body {
-  color: black;
-  background-image: linear-gradient(to bottom, white, whitesmoke);
+  color: var(--text-color);
+  background-image: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
 }
 
 .MainPage {
