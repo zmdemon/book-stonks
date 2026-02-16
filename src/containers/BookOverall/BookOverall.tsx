@@ -18,13 +18,21 @@ export const BookOverall = () => {
   }, [period, todayRead, totalRead, totalPages]);
 
   return (
-    <Card.Root width="370px" mt={'8'}>
+    <Card.Root
+      width={{ base: '100%', md: '370px' }}
+      maxWidth={{ base: 'calc(100vw - 32px)', md: '370px' }}
+      mt={{ base: 4, md: 8 }}
+    >
       <Card.Body>
-        <Text textStyle="2xl" fontWeight="medium" letterSpacing="wide">
+        <Text
+          textStyle={{ base: 'xl', md: '2xl' }}
+          fontWeight="medium"
+          letterSpacing="wide"
+        >
           {totalRead} стр.
         </Text>
         <Text
-          textStyle="sm"
+          textStyle={{ base: 'xs', md: 'sm' }}
           color="gray.600"
           fontWeight="medium"
           letterSpacing="wide"
@@ -43,14 +51,15 @@ export const BookOverall = () => {
           </Progress.Track>
         </Progress.Root>
         <Box
-          flexDirection="row"
+          flexDirection={{ base: 'column', sm: 'row' }}
           display="flex"
-          gap="1"
+          gap={{ base: 2, sm: 1 }}
           cursor="pointer"
           mt="2"
+          alignItems={{ base: 'flex-start', sm: 'center' }}
         >
           <Text
-            textStyle="sm"
+            textStyle={{ base: 'xs', md: 'sm' }}
             color={'green.700'}
             fontWeight="medium"
             letterSpacing="wide"
@@ -58,7 +67,7 @@ export const BookOverall = () => {
             {incomeText}
           </Text>
           <Text
-            textStyle="sm"
+            textStyle={{ base: 'xs', md: 'sm' }}
             color={'blue.700'}
             fontWeight="medium"
             letterSpacing="wide"

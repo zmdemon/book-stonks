@@ -23,18 +23,34 @@ export const DeleteBookDialog = ({ book, onClose }: Props) => {
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content>
+        <Dialog.Content
+          maxWidth={{ base: 'calc(100vw - 32px)', sm: 'md' }}
+          margin={{ base: 4, sm: 'auto' }}
+        >
           <Dialog.Header>
-            <Dialog.Title>Удалить книгу</Dialog.Title>
+            <Dialog.Title fontSize={{ base: 'lg', md: 'xl' }}>
+              Удалить книгу
+            </Dialog.Title>
           </Dialog.Header>
-          <Dialog.Body>
+          <Dialog.Body fontSize={{ base: 'sm', md: 'md' }}>
             <Text>Вы уверены, что хотите удалить «{book?.name}»?</Text>
           </Dialog.Body>
-          <Dialog.Footer>
-            <Button variant="outline" onClick={onClose}>
+          <Dialog.Footer
+            flexDirection={{ base: 'column', sm: 'row' }}
+            gap="2"
+          >
+            <Button
+              variant="outline"
+              onClick={onClose}
+              width={{ base: '100%', sm: 'auto' }}
+            >
               Отмена
             </Button>
-            <Button colorPalette="red" onClick={handleDelete}>
+            <Button
+              colorPalette="red"
+              onClick={handleDelete}
+              width={{ base: '100%', sm: 'auto' }}
+            >
               Удалить
             </Button>
           </Dialog.Footer>
