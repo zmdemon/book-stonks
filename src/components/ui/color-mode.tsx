@@ -29,10 +29,11 @@ export function useColorMode(): UseColorModeReturn {
     setTheme(resolvedTheme === "dark" ? "light" : "dark")
   }
   return {
-    colorMode: colorMode as ColorMode,
+  // @ts-ignore потом убрать когда будет разработка темной темы
+    colorMode: 'light' || colorMode,
     setColorMode: setTheme,
     toggleColorMode,
-  }
+  };
 }
 
 export function useColorModeValue<T>(light: T, dark: T) {
