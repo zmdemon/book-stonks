@@ -36,11 +36,21 @@ export const LogReadingDialog = ({ book, onClose }: Props) => {
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content>
+        <Dialog.Content
+          maxWidth={{ base: 'calc(100vw - 32px)', sm: 'md' }}
+          margin={{ base: 4, sm: 'auto' }}
+        >
           <Dialog.Header>
-            <Dialog.Title>Записать прочитанное</Dialog.Title>
+            <Dialog.Title fontSize={{ base: 'lg', md: 'xl' }}>
+              Записать прочитанное
+            </Dialog.Title>
           </Dialog.Header>
-          <Dialog.Body display="flex" flexDirection="column" gap="4">
+          <Dialog.Body
+            display="flex"
+            flexDirection="column"
+            gap={{ base: 3, md: 4 }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          >
             <Text>
               {book?.name} — осталось {remaining} стр.
             </Text>
@@ -54,11 +64,20 @@ export const LogReadingDialog = ({ book, onClose }: Props) => {
               />
             </Field.Root>
           </Dialog.Body>
-          <Dialog.Footer>
-            <Button variant="outline" onClick={handleClose}>
+          <Dialog.Footer
+            flexDirection={{ base: 'column', sm: 'row' }}
+            gap="2"
+          >
+            <Button
+              variant="outline"
+              onClick={handleClose}
+              width={{ base: '100%', sm: 'auto' }}
+            >
               Отмена
             </Button>
-            <Button onClick={handleSubmit}>Записать</Button>
+            <Button onClick={handleSubmit} width={{ base: '100%', sm: 'auto' }}>
+              Записать
+            </Button>
           </Dialog.Footer>
           <Dialog.CloseTrigger />
         </Dialog.Content>

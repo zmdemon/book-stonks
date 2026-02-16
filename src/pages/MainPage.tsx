@@ -1,20 +1,24 @@
 import './MainPages.css';
 import { Link, Outlet } from '@tanstack/react-router';
-import { Heading } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 const MainPage = () => {
   return (
     <>
-      <div className="MainPage">
+      <Box className="MainPage" paddingY={{ base: 2, md: 0 }}>
         <Link to="/" className="[&.active]:font-bold">
-          <Heading>Home</Heading>
+          <Heading size={{ base: 'md', md: 'lg' }} fontWeight="medium">
+            Home
+          </Heading>
         </Link>
         <Link to="/about" className="[&.active]:font-bold">
-          <Heading>About</Heading>
+          <Heading size={{ base: 'md', md: 'lg' }} fontWeight="medium">
+            About
+          </Heading>
         </Link>
-      </div>
+      </Box>
       <hr />
       <Outlet />
       <TanStackRouterDevtools />

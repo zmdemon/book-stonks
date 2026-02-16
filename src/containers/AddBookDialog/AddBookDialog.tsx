@@ -35,11 +35,21 @@ export const AddBookDialog = ({ open, onClose }: Props) => {
     >
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content>
+        <Dialog.Content
+          maxWidth={{ base: 'calc(100vw - 32px)', sm: 'md' }}
+          margin={{ base: 4, sm: 'auto' }}
+        >
           <Dialog.Header>
-            <Dialog.Title>Добавить книгу</Dialog.Title>
+            <Dialog.Title fontSize={{ base: 'lg', md: 'xl' }}>
+              Добавить книгу
+            </Dialog.Title>
           </Dialog.Header>
-          <Dialog.Body display="flex" flexDirection="column" gap="4">
+          <Dialog.Body
+            display="flex"
+            flexDirection="column"
+            gap={{ base: 3, md: 4 }}
+            fontSize={{ base: 'sm', md: 'md' }}
+          >
             <Field.Root required>
               <Field.Label>Название</Field.Label>
               <Input
@@ -58,11 +68,20 @@ export const AddBookDialog = ({ open, onClose }: Props) => {
               />
             </Field.Root>
           </Dialog.Body>
-          <Dialog.Footer>
-            <Button variant="outline" onClick={handleClose}>
+          <Dialog.Footer
+            flexDirection={{ base: 'column', sm: 'row' }}
+            gap="2"
+          >
+            <Button
+              variant="outline"
+              onClick={handleClose}
+              width={{ base: '100%', sm: 'auto' }}
+            >
               Отмена
             </Button>
-            <Button onClick={handleSubmit}>Добавить</Button>
+            <Button onClick={handleSubmit} width={{ base: '100%', sm: 'auto' }}>
+              Добавить
+            </Button>
           </Dialog.Footer>
           <Dialog.CloseTrigger />
         </Dialog.Content>

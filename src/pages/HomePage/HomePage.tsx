@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  AbsoluteCenter,
   Accordion,
   Box,
   Button,
@@ -25,20 +24,53 @@ const HomePage = () => {
 
   return (
     <>
-      <AbsoluteCenter flexDirection="column">
-        <Heading size="5xl" textAlign={'center'}>
+      <Box
+        minHeight={{ base: 'auto', md: '100vh' }}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent={{ base: 'flex-start', md: 'center' }}
+        paddingTop={{ base: 4, md: 0 }}
+        paddingBottom={{ base: 8, md: 0 }}
+        paddingX={{ base: 4, md: 0 }}
+      >
+        <Heading
+          size={{ base: '2xl', sm: '3xl', md: '4xl', lg: '5xl' }}
+          textAlign={'center'}
+          marginBottom={{ base: 4, md: 0 }}
+        >
           Welcome Home Fellow Reader!
         </Heading>
         <BookOverall />
-        <Box width={'m'} bg={'whitesmoke'} margin={'8'} padding={'8'}>
+        <Box
+          width={{ base: '100%', md: 'm' }}
+          maxWidth={{ base: '100%', md: '370px' }}
+          bg={'whitesmoke'}
+          margin={{ base: 4, md: 8 }}
+          padding={{ base: 4, md: 8 }}
+          borderRadius="md"
+          fontSize={{ base: 'sm', md: 'md' }}
+          textAlign="center"
+        >
           То чувство, когда прочитал пару страниц перед сном...
         </Box>
-        <Button mt="4" onClick={() => setAddDialogOpen(true)}>
+        <Button
+          mt={{ base: 2, md: 4 }}
+          onClick={() => setAddDialogOpen(true)}
+          width={{ base: '100%', sm: 'auto' }}
+          maxWidth={{ base: 'calc(100vw - 32px)', sm: 'none' }}
+        >
           Добавить книгу
         </Button>
-        <Accordion.Root collapsible defaultValue={['books']} variant={'plain'}>
+        <Accordion.Root
+          collapsible
+          defaultValue={['books']}
+          variant={'plain'}
+          width={{ base: '100%', md: 'auto' }}
+          maxWidth={{ base: '100%', md: 'none' }}
+        >
           <Accordion.Item value={'books'}>
-            <Accordion.ItemTrigger>
+            <Accordion.ItemTrigger fontSize={{ base: 'md', md: 'lg' }}>
               <Span flex="1">Книги</Span>
               <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
@@ -57,7 +89,7 @@ const HomePage = () => {
             </Accordion.ItemContent>
           </Accordion.Item>
         </Accordion.Root>
-      </AbsoluteCenter>
+      </Box>
 
       <AddBookDialog
         open={addDialogOpen}

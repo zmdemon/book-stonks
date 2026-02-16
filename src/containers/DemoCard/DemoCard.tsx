@@ -2,7 +2,10 @@ import { Avatar, Button, Card } from '@chakra-ui/react';
 
 export const DemoCard = () => {
   return (
-    <Card.Root width="320px">
+    <Card.Root
+      width={{ base: '100%', sm: '320px' }}
+      maxWidth={{ base: 'calc(100vw - 32px)', sm: '320px' }}
+    >
       <Card.Body gap="2">
         <Avatar.Root size="lg" shape="rounded">
           <Avatar.Image src="https://picsum.photos/200/300" />
@@ -15,9 +18,15 @@ export const DemoCard = () => {
           Curabitur nec odio vel dui euismod fermentum.
         </Card.Description>
       </Card.Body>
-      <Card.Footer justifyContent="flex-end">
-        <Button variant="outline">View</Button>
-        <Button>Join</Button>
+      <Card.Footer
+        justifyContent={{ base: 'stretch', sm: 'flex-end' }}
+        flexDirection={{ base: 'column', xs: 'row' }}
+        gap="2"
+      >
+        <Button variant="outline" width={{ base: '100%', xs: 'auto' }}>
+          View
+        </Button>
+        <Button width={{ base: '100%', xs: 'auto' }}>Join</Button>
       </Card.Footer>
     </Card.Root>
   );

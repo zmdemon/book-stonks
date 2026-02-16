@@ -7,6 +7,7 @@ export default defineConfig({
   html: {
     title: 'Book Stonks',
     meta: {
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
       'theme-color': '#3182ce',
       description: 'Трекер чтения книг',
       'apple-mobile-web-app-capable': 'yes',
