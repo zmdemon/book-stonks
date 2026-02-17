@@ -42,18 +42,6 @@ const HomePage = () => {
           Welcome Home Fellow Reader!
         </Heading>
         <BookOverall />
-        <Box
-          width={{ base: '100%', md: 'm' }}
-          maxWidth={{ base: '100%', md: '370px' }}
-          bg="gray.50"
-          margin={{ base: 4, md: 8 }}
-          padding={{ base: 4, md: 8 }}
-          borderRadius="md"
-          fontSize={{ base: 'sm', md: 'md' }}
-          textAlign="center"
-        >
-          То чувство, когда прочитал пару страниц перед сном...
-        </Box>
         <Button
           mt={{ base: 2, md: 4 }}
           onClick={() => setAddDialogOpen(true)}
