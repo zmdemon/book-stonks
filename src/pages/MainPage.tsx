@@ -11,6 +11,9 @@ const MainPage = () => {
         <Link to="/" className="[&.active]:font-bold">
           <Heading>Home</Heading>
         </Link>
+        <Link to="/stats" className="[&.active]:font-bold">
+          <Heading>Stats</Heading>
+        </Link>
         <Link to="/about" className="[&.active]:font-bold">
           <Heading>About</Heading>
         </Link>

@@ -158,3 +158,93 @@ export const togglePeriod = () => {
     period: period === 'today' ? 'allTime' : 'today',
   });
 };
+
+type DailyData = { date: string; pagesRead: number };
+
+const getDailyReadingData = (books: Book[], days: number): DailyData[] => {
+  const today = new Date();
+  const result: DailyData[] = [];
+
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().split('T')[0];
+    const pagesRead = books.reduce((sum, book) => {
+      return (
+        sum +
+        book.readingLog
+          .filter((e) => e.date === dateStr)
+          .reduce((s, e) => s + e.pagesRead, 0)
+      );
+    }, 0);
+    result.push({ date: dateStr, pagesRead });
+  }
+
+  return result;
+};
+
+const getReadingStreak = (books: Book[]): number => {
+  const allDates = new Set<string>();
+  for (const book of books) {
+    for (const entry of book.readingLog) {
+      allDates.add(entry.date);
+    }
+  }
+
+  let streak = 0;
+  const d = new Date();
+
+  // Check if read today; if not, start from yesterday
+  const todayStr = d.toISOString().split('T')[0];
+  if (!allDates.has(todayStr)) {
+    d.setDate(d.getDate() - 1);
+  }
+
+  while (true) {
+    const dateStr = d.toISOString().split('T')[0];
+    if (allDates.has(dateStr)) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+};
+
+type HeatmapEntry = { date: string; count: number };
+
+const getHeatmapData = (books: Book[], weeks: number): HeatmapEntry[] => {
+  const days = weeks * 7;
+  const today = new Date();
+  const result: HeatmapEntry[] = [];
+
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().split('T')[0];
+    const count = books.reduce((sum, book) => {
+      return (
+        sum +
+        book.readingLog
+          .filter((e) => e.date === dateStr)
+          .reduce((s, e) => s + e.pagesRead, 0)
+      );
+    }, 0);
+    result.push({ date: dateStr, count });
+  }
+
+  return result;
+};
+
+export const useAnalytics = (days = 30) =>
+  useBooksStore(
+    useShallow((state) => {
+      const dailyData = getDailyReadingData(state.books, days);
+      const streak = getReadingStreak(state.books);
+      const heatmap = getHeatmapData(state.books, 12);
+      const maxDailyPages = Math.max(...dailyData.map((d) => d.pagesRead), 0);
+      return { dailyData, streak, heatmap, maxDailyPages };
+    }),
+  );
