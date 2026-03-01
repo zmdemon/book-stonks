@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Button, Dialog, Field, Input, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Dialog,
+  Field,
+  Input,
+  NativeSelect,
+  Text,
+} from '@chakra-ui/react';
 import type { Book } from '@/types/book';
 import { logReading } from '@/store/store-books';
 
@@ -8,28 +15,42 @@ type Props = {
   onClose: () => void;
 };
 
+type InputMode = 'pages' | 'currentPage';
+
 const getTodayString = () => new Date().toISOString().split('T')[0];
 
 export const LogReadingDialog = ({ book, onClose }: Props) => {
-  const [pagesRead, setPagesRead] = useState('');
+  const [inputMode, setInputMode] = useState<InputMode>('pages');
+  const [value, setValue] = useState('');
   const [date, setDate] = useState(getTodayString);
 
   const remaining = book ? book.totalPages - book.currentPage : 0;
 
+  const computedPages =
+    inputMode === 'currentPage' && book
+      ? Number(value) - book.currentPage
+      : Number(value);
+
+  const isValid =
+    book !== null &&
+    date !== '' &&
+    value !== '' &&
+    computedPages > 0 &&
+    computedPages <= remaining;
+
   const handleSubmit = () => {
-    if (!book) return;
-    const pages = Number(pagesRead);
-    if (pages <= 0 || pages > remaining) return;
-    if (!date) return;
-    logReading(book.id, pages, date);
-    setPagesRead('');
+    if (!isValid || !book) return;
+    logReading(book.id, computedPages, date);
+    setValue('');
     setDate(getTodayString());
+    setInputMode('pages');
     onClose();
   };
 
   const handleClose = () => {
-    setPagesRead('');
+    setValue('');
     setDate(getTodayString());
+    setInputMode('pages');
     onClose();
   };
 
@@ -69,15 +90,50 @@ export const LogReadingDialog = ({ book, onClose }: Props) => {
                 onChange={(e) => setDate(e.target.value)}
               />
             </Field.Root>
-            <Field.Root required>
-              <Field.Label>Прочитано страниц</Field.Label>
-              <Input
-                type="number"
-                placeholder="Количество страниц"
-                value={pagesRead}
-                onChange={(e) => setPagesRead(e.target.value)}
-              />
+            <Field.Root>
+              <Field.Label>Режим ввода</Field.Label>
+              <NativeSelect.Root>
+                <NativeSelect.Field
+                  value={inputMode}
+                  onChange={(e) => {
+                    setInputMode(e.target.value as InputMode);
+                    setValue('');
+                  }}
+                >
+                  <option value="pages">Прочитано страниц</option>
+                  <option value="currentPage">Остановился на странице</option>
+                </NativeSelect.Field>
+                <NativeSelect.Indicator />
+              </NativeSelect.Root>
             </Field.Root>
+            {inputMode === 'pages' ? (
+              <Field.Root required>
+                <Field.Label>Прочитано страниц</Field.Label>
+                <Input
+                  type="number"
+                  placeholder="Количество страниц"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                />
+              </Field.Root>
+            ) : (
+              <Field.Root required>
+                <Field.Label>Текущая страница</Field.Label>
+                <Input
+                  type="number"
+                  placeholder={
+                    book ? String(book.currentPage + 1) : 'Номер страницы'
+                  }
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                />
+                {value !== '' && computedPages > 0 && (
+                  <Text textStyle="xs" color="gray.500" mt="1">
+                    = {computedPages} стр. прочитано
+                  </Text>
+                )}
+              </Field.Root>
+            )}
           </Dialog.Body>
           <Dialog.Footer
             flexDirection={{ base: 'column', sm: 'row' }}
