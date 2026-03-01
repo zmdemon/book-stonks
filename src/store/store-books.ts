@@ -159,9 +159,9 @@ export const togglePeriod = () => {
   });
 };
 
-type DailyData = { date: string; pagesRead: number };
+export type DailyData = { date: string; pagesRead: number };
 
-const getDailyReadingData = (books: Book[], days: number): DailyData[] => {
+export const getDailyReadingData = (books: Book[], days: number): DailyData[] => {
   const today = new Date();
   const result: DailyData[] = [];
 
@@ -183,7 +183,7 @@ const getDailyReadingData = (books: Book[], days: number): DailyData[] => {
   return result;
 };
 
-const getReadingStreak = (books: Book[]): number => {
+export const getReadingStreak = (books: Book[]): number => {
   const allDates = new Set<string>();
   for (const book of books) {
     for (const entry of book.readingLog) {
@@ -213,9 +213,9 @@ const getReadingStreak = (books: Book[]): number => {
   return streak;
 };
 
-type HeatmapEntry = { date: string; count: number };
+export type HeatmapEntry = { date: string; count: number };
 
-const getHeatmapData = (books: Book[], weeks: number): HeatmapEntry[] => {
+export const getHeatmapData = (books: Book[], weeks: number): HeatmapEntry[] => {
   const days = weeks * 7;
   const today = new Date();
   const result: HeatmapEntry[] = [];
@@ -238,13 +238,3 @@ const getHeatmapData = (books: Book[], weeks: number): HeatmapEntry[] => {
   return result;
 };
 
-export const useAnalytics = (days = 30) =>
-  useBooksStore(
-    useShallow((state) => {
-      const dailyData = getDailyReadingData(state.books, days);
-      const streak = getReadingStreak(state.books);
-      const heatmap = getHeatmapData(state.books, 12);
-      const maxDailyPages = Math.max(...dailyData.map((d) => d.pagesRead), 0);
-      return { dailyData, streak, heatmap, maxDailyPages };
-    }),
-  );

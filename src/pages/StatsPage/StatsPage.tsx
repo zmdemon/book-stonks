@@ -1,10 +1,23 @@
+import { useMemo } from 'react';
 import { Box, Card, Container, Text } from '@chakra-ui/react';
-import { useAnalytics } from '@/store/store-books';
+import {
+  useBooks,
+  getDailyReadingData,
+  getReadingStreak,
+  getHeatmapData,
+} from '@/store/store-books';
 import { ReadingChart } from '@/containers/ReadingChart/ReadingChart';
 import { ActivityHeatmap } from '@/containers/ActivityHeatmap/ActivityHeatmap';
 
 const StatsPage = () => {
-  const { dailyData, streak, heatmap, maxDailyPages } = useAnalytics(30);
+  const books = useBooks();
+  const { dailyData, streak, heatmap, maxDailyPages } = useMemo(() => {
+    const dailyData = getDailyReadingData(books, 30);
+    const streak = getReadingStreak(books);
+    const heatmap = getHeatmapData(books, 12);
+    const maxDailyPages = Math.max(...dailyData.map((d) => d.pagesRead), 0);
+    return { dailyData, streak, heatmap, maxDailyPages };
+  }, [books]);
 
   return (
     <Container
