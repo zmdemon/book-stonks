@@ -145,9 +145,9 @@ export const deleteBook = (id: string) => {
   });
 };
 
-export const logReading = (bookId: string, pagesRead: number) => {
+export const logReading = (bookId: string, pagesRead: number, date?: string) => {
   const { books } = useBooksStore.getState();
-  const today = getTodayDateString();
+  const logDate = date || getTodayDateString();
   useBooksStore.setState({
     books: books.map((b) => {
       if (b.id !== bookId) return b;
@@ -155,7 +155,7 @@ export const logReading = (bookId: string, pagesRead: number) => {
       return {
         ...b,
         currentPage: newCurrentPage,
-        readingLog: [...b.readingLog, { date: today, pagesRead }],
+        readingLog: [...b.readingLog, { date: logDate, pagesRead }],
       };
     }),
   });

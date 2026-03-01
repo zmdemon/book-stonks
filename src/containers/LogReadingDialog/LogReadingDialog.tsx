@@ -8,8 +8,11 @@ type Props = {
   onClose: () => void;
 };
 
+const getTodayString = () => new Date().toISOString().split('T')[0];
+
 export const LogReadingDialog = ({ book, onClose }: Props) => {
   const [pagesRead, setPagesRead] = useState('');
+  const [date, setDate] = useState(getTodayString);
 
   const remaining = book ? book.totalPages - book.currentPage : 0;
 
@@ -17,13 +20,16 @@ export const LogReadingDialog = ({ book, onClose }: Props) => {
     if (!book) return;
     const pages = Number(pagesRead);
     if (pages <= 0 || pages > remaining) return;
-    logReading(book.id, pages);
+    if (!date) return;
+    logReading(book.id, pages, date);
     setPagesRead('');
+    setDate(getTodayString());
     onClose();
   };
 
   const handleClose = () => {
     setPagesRead('');
+    setDate(getTodayString());
     onClose();
   };
 
@@ -54,6 +60,15 @@ export const LogReadingDialog = ({ book, onClose }: Props) => {
             <Text>
               {book?.name} — осталось {remaining} стр.
             </Text>
+            <Field.Root required>
+              <Field.Label>Дата</Field.Label>
+              <Input
+                type="date"
+                value={date}
+                max={getTodayString()}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </Field.Root>
             <Field.Root required>
               <Field.Label>Прочитано страниц</Field.Label>
               <Input
